@@ -19,7 +19,7 @@ Example :
 
 ##### Installation by Bower
 ```
-bower install marathon-maps
+bower install maps-marathon
 ```
 
 ##Usage
