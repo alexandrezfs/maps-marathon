@@ -28,7 +28,7 @@ bower install maps-marathon
 var marathon = $("#your_div_element").marathon(options);
 ```
 
-##Options
+#####Options
 - distanceInterval : The step length, in meters
 - opts : The zoom, map type and center coordinates
 - places : Array of custom markers you want to add to the map
