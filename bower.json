@@ -1,0 +1,16 @@
+{
+  "name": "maps-marathon",
+  "version": "0.0.1",
+  "homepage": "https://github.com/alexzhxin/maps-marathon",
+  "authors": [
+    "alex.nr@hotmail.co.jp"
+  ],
+  "description": "[Javascript] Jquery library that lets you draw itineraries on a Google Maps and set a custom marker that can progress step by step, for example a runner for a marathon.",
+  "main": "marathon.jquery.js",
+  "keywords": [
+    "google",
+    "maps",
+    "api"
+  ],
+  "license": "MIT"
+}
