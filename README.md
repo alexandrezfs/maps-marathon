@@ -22,10 +22,10 @@ Example :
 bower install maps-marathon
 ```
 
-##Usage
+##Initialization
 
 ```
-$("#your_div_element").marathon(options);
+var marathon = $("#your_div_element").marathon(options);
 ```
 
 ##Options
@@ -58,7 +58,7 @@ var options = {
     routes: [
         {
             label: 'Asics 1',
-            slug: 'asics1',
+            slug: 'asics1', //The slug is the route ID
             request: {
                 origin: new google.maps.LatLng(34.6892735, 135.8117425),
                 destination: new google.maps.LatLng(34.6953515, 135.8268809),
@@ -73,7 +73,7 @@ var options = {
         },
         {
             label: 'Asics 2',
-            slug: 'asics2',
+            slug: 'asics2', //The slug is the route ID
             request: {
                 origin: new google.maps.LatLng(34.6900057, 135.8188343),
                 destination: new google.maps.LatLng(34.6875179, 135.8352923),
@@ -88,4 +88,22 @@ var options = {
         }
     ]
 };
+```
+
+##Usage
+
+#####Call the run method on a given route to make your marker progress
+```
+marathon.run(routeId, callback);
+```
+
+#####Example :
+```
+var marathon = $("#your_div_element").marathon(options);
+
+marathon.run("asics1", function() {
+
+    console.log("I'm running !");    
+
+});
 ```
