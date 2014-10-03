@@ -1,7 +1,10 @@
 $.fn.marathon = function (options) {
 
+    var options = options;
     var jqueryElement = this;
     var divElement = jqueryElement.attr('id');
+    var map = null;
+    var directions = {};
 
     /**
      * Initialize map
@@ -9,13 +12,6 @@ $.fn.marathon = function (options) {
     google.maps.event.addDomListener(window, 'load', function () {
         initMap(divElement, options);
     });
-
-    /**
-     * Global vars
-     * @type {{}}
-     */
-    var map = null;
-    var directions = {};
 
     /**
      * Map initializer
@@ -80,29 +76,52 @@ $.fn.marathon = function (options) {
      * Take a route and move the marker forward depending on distance
      * @param routeId
      */
-    function stepForward(routeId) {
+    function stepRun(routeId, action) {
 
         if (directions[routeId]) {
 
-            var direction = directions[routeId],
-                markers = direction.sets[direction.renderer.dist],
-                previousMarker = markers[direction.renderer.step - 1],
-                marker = markers[direction.renderer.step];
+            var direction = directions[routeId];
+            var markers = direction.sets[direction.renderer.dist];
 
-            directions[routeId].renderer.step++;
+            var nextStepIndex = -1;
 
-            if (previousMarker) {
-                previousMarker.setVisible(false);
+            if (action == "forward") {
+                nextStepIndex = direction.renderer.step;
+                directions[routeId].renderer.step++;
+            }
+            else if (action == "before") {
+                nextStepIndex = direction.renderer.step;
+                directions[routeId].renderer.step--;
             }
 
-            if (marker) {
-                marker.setVisible(true);
+            var values = {
+                direction: direction,
+                markers: markers,
+                nextStepMarker: markers[nextStepIndex],
+                marker: markers[direction.renderer.step],
+                action: action
+            };
+
+            if (values.nextStepMarker) { //set unvisible the previous marker
+                values.nextStepMarker.setVisible(false);
             }
-            else {
-                direction.renderer.step = 0;
-                alert(routeId + " reached arrival");
+
+            if (values.marker) { //A marker is present.
+                values.marker.setVisible(true);
             }
+            else { //No more marker... Let's reset steps
+                if (action == "forward") {
+                    values.direction.renderer.step = 0;
+                }
+                else if (action == "before") {
+                    values.direction.renderer.step = markers.length - 1;
+                }
+            }
+
+            return values;
         }
+
+        return false;
 
     }
 
@@ -241,7 +260,7 @@ $.fn.marathon = function (options) {
     }
 
     /**
-     * @type {{sendTweet: Function}}
+     * @type {{run: Function}}
      */
     var marathonMethods = {
 
@@ -251,9 +270,41 @@ $.fn.marathon = function (options) {
          */
         run: function (routeId, callback) {
 
-            stepForward(routeId);
+            var response = stepRun(routeId, "forward");
 
-            callback();
+            callback(response);
+        },
+
+        /**
+         * @param routeId
+         * @param callback
+         */
+        unrun: function (routeId, callback) {
+
+            var response = stepRun(routeId, "before");
+
+            callback(response);
+        },
+
+        /**
+         * @returns {{}}
+         */
+        getMap: function () {
+            return map;
+        },
+
+        /**
+         * @returns {*}
+         */
+        getOptions: function () {
+            return options;
+        },
+
+        /**
+         * @returns {$.fn}
+         */
+        getUiElement: function () {
+            return jqueryElement;
         }
     };
 

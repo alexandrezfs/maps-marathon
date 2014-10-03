@@ -92,7 +92,7 @@ var options = {
 
 ##Usage
 
-#####Call the run method on a given route to make your marker progress
+#####Call the "run" method on a given route to make your marker progress
 ```
 marathon.run(routeId, callback);
 ```
@@ -107,3 +107,30 @@ marathon.run("asics1", function() {
 
 });
 ```
+
+#####...Or "unrun" to make your marker unprogress.
+```
+marathon.unrun(routeId, callback);
+```
+
+#####Example :
+```
+var marathon = $("#your_div_element").marathon(options);
+
+marathon.unrun("asics1", function() {
+
+    console.log("I'm unrunning !");    
+
+});
+```
+
+##Getting parameters
+
+###getMap()
+Get the google map entity.
+
+###getOptions()
+Get options initially passed to the marathon instance.
+
+###getUiElement()
+Get Jquery element where the map has been initialized.
