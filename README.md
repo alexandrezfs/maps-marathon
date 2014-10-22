@@ -3,7 +3,7 @@ maps-marathon
 
 [Javascript] Jquery library that lets you draw itineraries on a Google Maps and set a custom marker that can progress step by step, for example a runner for a marathon.
 
-![alt tag](https://raw.githubusercontent.com/alexzhxin/maps-marathon/master/maps-marathon.png)
+![alt tag](https://raw.githubusercontent.com/alexzhxin/maps-marathon/master/preview.png)
 
 ##Installation
 
